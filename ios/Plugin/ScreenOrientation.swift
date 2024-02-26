@@ -21,7 +21,7 @@ public class ScreenOrientation: NSObject {
         return fromDeviceOrientationToOrientationType(currentOrientation)
     }
 
-    private func lockLegacy(_ orientation: Int) {
+    private func lockLegacy(_ orientation: Any) {
         UIDevice.current.setValue(orientation, forKey: "orientation")
         UINavigationController.attemptRotationToDeviceOrientation()
     }
@@ -32,7 +32,7 @@ public class ScreenOrientation: NSObject {
             if let orientation = orientation as? Int {
                 self.capViewController?.supportedOrientations = [orientation]
             } else {
-                self.capViewController?.supportedOrientations = orientation
+                self.capViewController?.supportedOrientations = orientation as! [Int]
             }
             let mask = self.fromOrientationTypeToMask(orientationType)
             if #available(iOS 16.0, *) {
