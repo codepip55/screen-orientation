@@ -29,7 +29,11 @@ public class ScreenOrientation: NSObject {
     public func lock(_ orientationType: String, completion: @escaping (Error?) -> Void) {
         DispatchQueue.main.async {
             let orientation = self.fromOrientationTypeToInt(orientationType)
-            self.capViewController?.supportedOrientations = [orientation]
+            if let orientation = orientation as? Int {
+                self.capViewController?.supportedOrientations = [orientation]
+            } else {
+                self.capViewController?.supportedOrientations = orientation
+            }
             let mask = self.fromOrientationTypeToMask(orientationType)
             if #available(iOS 16.0, *) {
                 if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
@@ -98,12 +102,12 @@ public class ScreenOrientation: NSObject {
         }
     }
 
-    private func fromOrientationTypeToInt(_ orientationType: String) -> Int {
+    private func fromOrientationTypeToInt(_ orientationType: String) -> Any {
         switch orientationType {
         case "any":
             return UIInterfaceOrientation.unknown.rawValue
         case "landscape":
-            return UIInterfaceOrientation.landscapeLeft.rawValue
+            return [UIInterfaceOrientation.landscapeLeft.rawValue, UIInterfaceOrientation.landscapeRight.rawValue]
         case "landscape-primary":
             return UIInterfaceOrientation.landscapeLeft.rawValue
         case "landscape-secondary":
