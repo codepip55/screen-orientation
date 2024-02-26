@@ -29,7 +29,6 @@ public class ScreenOrientation: NSObject {
     public func lock(_ orientationType: String, completion: @escaping (Error?) -> Void) {
         DispatchQueue.main.async {
             let orientation = self.fromOrientationTypeToInt(orientationType)
-            // If orientation is not an array, wrap the value in an array
             if let orientation = orientation as? Int {
                 self.capViewController?.supportedOrientations = [orientation]
             } else {
