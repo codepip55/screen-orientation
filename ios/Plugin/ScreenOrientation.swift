@@ -102,7 +102,9 @@ public class ScreenOrientation: NSObject {
         switch orientationType {
         case "any":
             return UIInterfaceOrientation.unknown.rawValue
-        case "landscape", "landscape-primary":
+        case "landscape":
+            return UIInterfaceOrientation.landscapeLeft.rawValue
+        case "landscape-primary":
             return UIInterfaceOrientation.landscapeLeft.rawValue
         case "landscape-secondary":
             return UIInterfaceOrientation.landscapeRight.rawValue
